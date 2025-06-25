@@ -1,4 +1,4 @@
-from piece import Pawn
+from piece import Pawn, Rook, Knight, Bishop, Queen, King
 
 class Square:
     def __init__(self, row, col):
@@ -20,13 +20,14 @@ class Square:
     
 class Board:
     def __init__ (self):
-       outer = []
-       for row in range(8):
-        inner = []
-        for col in range(8):
-            inner.append(Square(row, col))
-        outer.append(inner)
+        outer = []
+        for row in range(8):
+            inner = []
+            for col in range(8):
+                inner.append(Square(row, col))
+            outer.append(inner)
         self.squares = outer
+        self.initialize()
         
 
     def getSquare(self,row, col):
@@ -51,14 +52,22 @@ class Board:
     
     def isValidPosition(self, row, col):
         return 0 <= row < 8 and 0 <= col < 8
+    
+    def initialize(self):
+        for col in range(8):
+            self.getSquare(1 ,col).setPiece(Pawn("black"))
+            self.getSquare(6, col).setPiece(Pawn("white"))
+        
+        order = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        for col, pieceClass in enumerate(order):
+            self.getSquare(0,col).setPiece(pieceClass("black"))
+            self.getSquare(7,col).setPiece(pieceClass("white"))
 
+    def printBoard(self):
+        for row in self.squares:
+            print(" | ".join(p.getPiece().getType()[0] if not p.isEmpty() else "." for p in row))
 
 board = Board()
 
-pawn = Pawn("white")
-board.getSquare(6,4).setPiece(pawn)
 
-success = board.movePiece(6,4,4,4)
-
-print("Move successful:", success)
-print("Square e4 now has:", board.getSquare(4,4).getPiece)
+board.printBoard()
