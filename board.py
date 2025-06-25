@@ -1,20 +1,3 @@
-# Coding Assignment:
-# Create Board class
-# Contains 64 Square objects
-# Methods: getSquare(position), movePiece(from, to), isValidPosition()
-# Create Player class
-# Properties: color, capturedPieces list
-# Methods: addCapturedPiece(), getCapturedPieces()
-# Implement board initialization with pieces in starting positions
-# Design Decision: Should Board own the Pieces, or should Players own them? Implement both approaches and compare.
-# Evening Reflection:
-# What's the difference between Board "containing" Squares vs "referencing" Players?
-# If you delete a Player, what happens to their pieces?
-
-# Coding Assignment:
-# Create Board class
-# Contains 64 Square objects
-# Methods: getSquare(position), movePiece(from, to), isValidPosition()
 from piece import Pawn
 
 class Square:
