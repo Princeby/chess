@@ -12,7 +12,7 @@ class Piece(ABC):
         return self.pieceType
     
     @abstractmethod
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         pass
     
     def markAsMoved(self):
@@ -23,16 +23,30 @@ class Pawn(Piece):
         super().__init__(color)
         self.pieceType = "Pawn"
     
-    def getValidMoves(self, row, col):
-            direction = -1 if self.color == "white" else 1
-            return [(row + direction, col)]
+    def getValidMoves(self, row, col, board):
+        direction = -1 if self.color == "white" else 1
+        moves = []
+
+        # One step forward
+        next_row = row + direction
+        if board.isValidPosition(next_row, col) and board.getSquare(next_row, col).isEmpty():
+            moves.append((next_row, col))
+
+            # Two steps forward if on starting rank
+            start_row = 6 if self.color == "white" else 1
+            two_steps_row = row + (2 * direction)
+            if row == start_row and board.isValidPosition(two_steps_row, col):
+                if board.getSquare(two_steps_row, col).isEmpty():
+                    moves.append((two_steps_row, col))
+
+        return moves
 
 class Rook(Piece):
     def __init__(self, color):
         super().__init__(color)
         self.pieceType = "Rook"
     
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         moves = []
         for i in range(8):
             if i != row:
@@ -45,7 +59,7 @@ class Bishop(Piece):
     def __init__(self, color):
         super().__init__(color)
         self.pieceType = "Bishop"
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         moves = []
         for i in range(1, 8):
             if row + i < 8 and col + i < 8:
@@ -63,7 +77,7 @@ class Knight(Piece):
         super().__init__(color)
         self.pieceType = "Knight"
 
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         deltas = [
             (-2, -1), (-2, 1), (-1, -2), (-1, 2),
             (1, -2), (1, 2), (2, -1), (2, 1)
@@ -77,7 +91,7 @@ class Queen(Piece):
         super().__init__(color)
         self.pieceType = "Queen"
     
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         # Combine rook and bishop logic
         moves = Rook(self.color).getValidMoves(row, col)
         moves += Bishop(self.color).getValidMoves(row, col)
@@ -88,7 +102,7 @@ class King(Piece):
         super().__init__(color)
         self.pieceType = "King"
     
-    def getValidMoves(self, row, col):
+    def getValidMoves(self, row, col, board):
         moves = []
         for dr in [-1, 0, 1]:
             for dc in [-1, 0, 1]:
