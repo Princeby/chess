@@ -1,16 +1,19 @@
-
 class Square:
-    def __init__(self, position):
-        self.position = position
-        self.piece = None
-
+    def __init__(self, row, col):
+        self._row = row
+        self._col = col    
+        self._piece = None
+    
     def isEmpty(self):
-        return self.position is None
+        return self._piece is None
     
     def setPiece(self, piece):
-        self.piece = piece
-    
+        self._piece = piece
+
     def getPiece(self):
-        return self.piece
+        return self._piece
+    
+    def __repr__(self):
+        return f"Square({self.row}, {self.col}, {self.piece})"
 
 

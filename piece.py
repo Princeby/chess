@@ -108,10 +108,10 @@ def test_pieces():
         King("black")
     ]
 
-    start_row, start_col = 4, 4  # Center square (e5)
-    for piece in pieces:
-        moves = piece.getValidMoves(start_row, start_col)
-        print(f"{piece.getType()} ({piece.getColor()}): {moves}")
+    # start_row, start_col = 4, 4  # Center square (e5)
+    # for piece in pieces:
+    #     moves = piece.getValidMoves(start_row, start_col)
+    #     print(f"{piece.getType()} ({piece.getColor()}): {moves}")
 
 test_pieces()
 # Coding Assignment:
@@ -122,5 +122,3 @@ test_pieces()
 # Create a test that puts different pieces in an array and calls getValidMoves() on each
 # generic = Piece('white')
 # print(f'{generic.color} and {generic.getType()}')
-white_pawn = Pawn('black')
-print(f"{white_pawn.color} and {white_pawn.getType()}")
